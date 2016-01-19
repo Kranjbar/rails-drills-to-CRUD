@@ -1,0 +1,11 @@
+<h2>Articles</h2>
+<% @user.articles.each do |article| %>
+  <p>
+    <strong>Title:</strong>
+    <%= article.title %>
+  </p>
+ 
+  <p>
+    <%= article.content %>
+  </p>
+<% end %>
