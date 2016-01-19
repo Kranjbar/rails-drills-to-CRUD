@@ -8,15 +8,13 @@ class UsersController < ApplicationController
   end
 
   def create
-    user_params = params.require(:user).permit(:first_name, :last_name, :email, :password)
     @user = User.create(user_params)
     login(@user)
     redirect_to @user
   end
 
   def edit
-    user_id = params[:id]
-    @user = User.find_by_id(user_id)
+    @user = User.find_by_id(params[:id])
   end
 
   def show
@@ -24,13 +22,20 @@ class UsersController < ApplicationController
   end
 
   def update
-    user_id = params[:id]
-    @user = User.find_by_id(user_id)
-    user_params = params.require(:user).permit(:first_name, :last_name, :email, :password)
+    @user = User.find_by_id(params[:id])
     @user.update_attributes(user_params)
     redirect_to user_path(@user)
   end
 
   def destroy
+    @user = User.find_by_id(params[:id])
+    @user.destroy
+    redirect_to users_path
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:first_name, :last_name, :email, :password)
   end
 end
